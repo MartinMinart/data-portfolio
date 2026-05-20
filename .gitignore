@@ -1,42 +1,42 @@
 ```
-# Compiled and build artifacts
+# Compiled Python files
 *.pyc
 __pycache__/
 
 # Dependencies
-.venv/
 venv/
-node_modules/
-dist/
-build/
-target/
-.gradle/
-
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-
-# Environment
+.venv/
 .env
-.env.local
 *.env.*
 
-# Editors
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Output directories (keeping .gitkeep files but ignoring generated content)
+project-01-software-eda/output/charts/*.png
+project-01-software-eda/output/reports/*.txt
+
+# Logs
+*.log
+
+# Editor/IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Coverage reports
 coverage/
 htmlcov/
 .coverage
 
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# MyPy cache
-.mypy_cache/
-# PyTest cache
-.pytest_cache/
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
 ```
