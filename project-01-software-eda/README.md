@@ -26,9 +26,9 @@ python src\analyze_software.py
 
 ### Вариант 2: Jupyter Notebook
 В VS Code:
-Откройте notebooks/software_eda.ipynb
-Выберите kernel: Python 3.10 #Ваше ядро
-Нажмите "Run All" (▶▶)
+- Откройте notebooks/software_eda.ipynb
+- Выберите kernel: Python 3.10 #Ваше ядро
+- Нажмите "Run All" (▶▶)
 
 В браузере:
 ```powershell
@@ -45,9 +45,9 @@ python src/analyze_software.py
 ```
 
 ## Результаты
-После запуска в папке output/ появятся:
-Графики (output/charts/):
-top_vendors.png — Топ-10 вендоров
-install_timeline.png — Временная шкала установки
-Отчёты (output/reports/):
-software_report_YYYYMMDD_HHMMSS.txt — Текстовый отчёт
+- После запуска в папке output/ появятся:
+- Графики (output/charts/):
+- - top_vendors.png — Топ-10 вендоров
+- - install_timeline.png — Временная шкала установки
+- Отчёты (output/reports/):
+- - software_report_YYYYMMDD_HHMMSS.txt — Текстовый отчёт
