@@ -69,7 +69,7 @@ def plot_top_vendors(df, output_path):
     """График топ вендоров"""
     plt.figure(figsize=(12, 8))
     vendor_counts = df['Publisher'].value_counts().head(10)
-    sns.barplot(x=vendor_counts.values, y=vendor_counts.index, palette='viridis')
+    sns.barplot(x=vendor_counts.values, y=vendor_counts.index, hue=vendor_counts.index, palette='viridis', legend=False)
     plt.title('Топ-10 вендоров по количеству установленного ПО')
     plt.xlabel('Количество программ')
     plt.ylabel('Вендор')

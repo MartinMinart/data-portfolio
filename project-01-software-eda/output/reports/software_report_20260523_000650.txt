@@ -1,0 +1,29 @@
+=== Отчет по установленному ПО ===
+
+Всего программ: 395
+Всего уникальных вендоров: 68
+Установлено после 2024-01-01: 94
+
+Топ-10 вендоров по количеству ПО:
+  - CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US: 137
+  - Microsoft Corporation: 107
+  - CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US: 41
+  - NVIDIA Corporation: 12
+  - Intel Corporation: 11
+  - Autodesk: 7
+  - Корпорация Майкрософт: 5
+  - LunarG, Inc.: 4
+  - Apple Inc.: 3
+  - Яндекс: 3
+
+Топ-10 программ:
+  - Microsoft.WindowsAppRuntime.1.8: 6
+  - Intel(R) Management Engine Components: 3
+  - icecap_collection_x64: 3
+  - Microsoft.UI.Xaml.2.8: 3
+  - SQL Server 2017 Database Engine Shared: 2
+  - SQL Server 2017 DMF: 2
+  - SQL Server 2017 Shared Management Objects: 2
+  - SQL Server 2017 Database Engine Services: 2
+  - Autodesk Content Service: 2
+  - SQL Server 2017 Common Files: 2
