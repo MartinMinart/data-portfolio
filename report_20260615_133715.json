@@ -1,0 +1,83 @@
+{
+  "timestamp": "2026-06-15T13:37:15.739792",
+  "project_path": "/workspaces/data-portfolio",
+  "project_type": [
+    "data-portfolio"
+  ],
+  "git_info": {
+    "branch": "исправленный-проект",
+    "last_commit": "115df6b",
+    "total_commits": 19
+  },
+  "stats": {
+    "total_files": 336,
+    "extensions": {
+      ".json": {
+        "count": 3,
+        "size": 3323
+      },
+      ".txt": {
+        "count": 8,
+        "size": 20957
+      },
+      "no_extension": {
+        "count": 135,
+        "size": 133072
+      },
+      ".py": {
+        "count": 6,
+        "size": 59855
+      },
+      ".md": {
+        "count": 9,
+        "size": 65301
+      },
+      ".ipynb": {
+        "count": 12,
+        "size": 31574407
+      },
+      ".sql": {
+        "count": 9,
+        "size": 33964
+      },
+      ".db": {
+        "count": 1,
+        "size": 122880
+      },
+      ".bak": {
+        "count": 1,
+        "size": 4809
+      },
+      ".csv": {
+        "count": 2,
+        "size": 44075
+      },
+      ".png": {
+        "count": 2,
+        "size": 409741
+      },
+      ".sample": {
+        "count": 14,
+        "size": 25827
+      },
+      ".idx": {
+        "count": 1,
+        "size": 2360
+      },
+      ".rev": {
+        "count": 1,
+        "size": 236
+      },
+      ".pack": {
+        "count": 1,
+        "size": 20564631
+      }
+    }
+  },
+  "issues": [],
+  "dependencies": {
+    "python": null,
+    "node": null,
+    "docker": null
+  }
+}
