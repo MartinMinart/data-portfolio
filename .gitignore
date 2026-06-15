@@ -1,11 +1,42 @@
-__pycache__/
+```
+# Compiled Python files
 *.pyc
-*.pyo
-*.pyd
-.Python
-env/
+__pycache__/
+
+# Dependencies
 venv/
+.venv/
+.env
+*.env.*
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Output directories (keeping .gitkeep files but ignoring generated content)
+project-01-software-eda/output/charts/*.png
+project-01-software-eda/output/reports/*.txt
+
+# Logs
 *.log
-data/*.csv
-output/*
-!output/.gitkeepNothing needs to be added to .gitignore since only a README.md file was modified and no build artifacts, dependencies, or temporary files were detected in the changes.
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+```

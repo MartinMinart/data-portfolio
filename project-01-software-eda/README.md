@@ -1,53 +1,167 @@
-# Project 01: Software EDA (Exploratory Data Analysis)
+# 📊 Software Analysis Project
 
-## Описание
-Проект демонстрирует навыки сбора, очистки и визуального анализа данных о программном обеспечении на рабочем месте аналитика.
+**Разведочный анализ установленного программного обеспечения**
 
-## Структура
-- `data/`: Исходные данные (CSV)
-- `src/`: Python скрипт для автоматического анализа
-- `notebooks/`: Jupyter Notebook для интерактивного исследования
-- `output/`: Сгенерированные графики и текстовые отчеты
+---
 
-## Как запустить
+## 🎯 Описание проекта
 
-### Вариант 1: Python скрипт (Windows PowerShell)
+Этот проект демонстрирует навыки Data Analyst в области:
+- **EDA (Exploratory Data Analysis)** — разведочный анализ данных
+- **Визуализации** — построение информативных графиков с помощью matplotlib и seaborn
+- **Генерации отчетов** — автоматическое создание сводных отчетов
+- **Работы с данными** — очистка, трансформация, агрегация
 
-```powershell
-# Активируйте среду
-conda activate data-work
+**Цель:** Проанализировать установленное ПО на рабочем компьютере, выявить закономерности распределения по категориям и вендорам, оценить динамику установок.
 
-# Перейдите в папку проекта
-cd C:\Users\MI\Documents\GitHub\data-portfolio\project-01-software-eda
+---
 
-# Запустите скрипт
-python src\analyze_software.py
+## 📁 Структура проекта
+
+```
+project-01-software-eda/
+├── data/
+│   └── installed_software.csv      # Исходные данные (40+ записей)
+├── src/
+│   └── analyze_software.py         # Основной скрипт анализа
+├── notebooks/
+│   └── software_eda.ipynb          # Интерактивный Jupyter Notebook
+├── output/
+│   ├── charts/                     # Сгенерированные графики (.png)
+│   └── reports/                    # Текстовые отчеты (.txt)
+├── README.md                       # Этот файл
+└── requirements.txt                # Зависимости Python
 ```
 
-### Вариант 2: Jupyter Notebook
-В VS Code:
-- Откройте notebooks/software_eda.ipynb
-- Выберите kernel: Python 3.10 #Ваше ядро
-- Нажмите "Run All" (▶▶)
+---
 
-В браузере:
-```powershell
-conda activate data-work
-cd project-01-software-eda\notebooks
-jupyter notebook
-```
+## 🚀 Быстрый старт
 
-### Вариант 3: Git Bash (Linux/Mac)
+### Требования
+
+- Python 3.8+
+- Anaconda или виртуальное окружение
+- Библиотеки из `requirements.txt`
+
+### Установка зависимостей
+
 ```bash
-conda activate data-work
-cd ~/Documents/GitHub/data-portfolio/project-01-software-eda
+pip install -r requirements.txt
+```
+
+Или через conda:
+
+```bash
+conda install pandas matplotlib seaborn jupyter
+```
+
+---
+
+## 📌 Как запустить
+
+### Вариант 1: Запуск Python-скрипта
+
+Из корневой папки проекта выполните:
+
+```bash
 python src/analyze_software.py
 ```
 
-## Результаты
-- После запуска в папке output/ появятся:
-- Графики (output/charts/):
-- - top_vendors.png — Топ-10 вендоров
-- - install_timeline.png — Временная шкала установки
-- Отчёты (output/reports/):
-- - software_report_YYYYMMDD_HHMMSS.txt — Текстовый отчёт
+**Результат:**
+- ✅ 4 графика в папке `output/charts/`
+- ✅ Текстовый отчет в папке `output/reports/`
+- ✅ Вывод основных метрик в консоль
+
+### Вариант 2: Интерактивный анализ в Jupyter Notebook
+
+```bash
+jupyter notebook notebooks/software_eda.ipynb
+```
+
+Откройте ноутбук в браузере и выполняйте ячейки последовательно (Shift+Enter).
+
+**Преимущества ноутбука:**
+- Пошаговый анализ с комментариями
+- Возможность изменять параметры визуализации
+- Интерактивные выводы и инсайты
+
+---
+
+## 📊 Что анализируется
+
+### Исходные данные (`installed_software.csv`)
+
+| Колонка | Описание | Тип |
+|---------|----------|-----|
+| software_name | Название программы | string |
+| category | Категория (Development, BI, Office и др.) | string |
+| version | Версия программы | string |
+| install_date | Дата установки | date |
+| vendor | Производитель | string |
+| size_mb | Размер в МБ | numeric |
+
+**Объем данных:** 40+ записей о установленном ПО
+
+---
+
+## 📈 Результаты анализа
+
+### Основные метрики
+
+- **Всего программ:** 40+
+- **Общий размер:** ~15 ГБ
+- **Категорий:** 8 (Development, Database, BI, Office, и др.)
+- **Топ вендор:** Microsoft (10+ продуктов)
+
+### Созданные визуализации
+
+1. **Распределение ПО по категориям** — бар чарт
+2. **Топ-8 вендоров** — горизонтальный бар чарт
+3. **Общий размер по категориям (ГБ)** — бар чарт
+4. **Динамика установок по месяцам** — линейный график
+
+### Пример отчета
+
+Текстовый отчет включает:
+- Сводные метрики
+- Распределение по категориям
+- Топ вендоров
+- Список созданных графиков
+
+---
+
+## 💡 Ключевые инсайты
+
+1. **Development** — наиболее представленная категория (Python, Git, VS Code, Jupyter)
+2. **Microsoft** — доминирующий вендор (Office, Power BI, SQL Server)
+3. **Пик установок** — Февраль-Март 2024 (активная настройка рабочего окружения)
+4. **Самые тяжелые категории** — Office и BI инструменты (>5 ГБ суммарно)
+
+---
+
+## 🛠 Технологии
+
+- **Язык:** Python 3.10
+- **Библиотеки:**
+  - `pandas` — работа с данными
+  - `matplotlib` — базовая визуализация
+  - `seaborn` — статистические графики
+  - `jupyter` — интерактивный анализ
+- **Форматы:** CSV, PNG, TXT, IPYNB
+
+---
+
+## 📝 Автор
+
+**Artur Minart**  
+Data Analyst | Fintech & IT Focus  
+
+📧 iamartur1111@gmail.com  
+🔗 [GitHub](https://github.com/MartinMinart/data-portfolio)  
+📍 Москва
+
+---
+
+## 📄 Лицензия
+
+Этот проект является частью портфолио и предназначен для демонстрации навыков.

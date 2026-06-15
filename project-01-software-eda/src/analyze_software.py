@@ -1,143 +1,227 @@
+"""
+Software Analysis Module
+Анализ установленного ПО: загрузка, очистка, визуализация и генерация отчетов.
+
+Автор: Artur Minart
+Дата: 2026-05-20
+"""
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import os
+from pathlib import Path
 from datetime import datetime
 
-# Настройка стиля графиков
-sns.set(style="whitegrid")
-plt.rcParams['figure.figsize'] = (10, 6)
 
-def load_data(filepath):
-    """Загрузка данных из CSV"""
-    print(f"Загрузка данных из {filepath}...")
-    if not os.path.exists(filepath):
-        raise FileNotFoundError(f"Файл не найден: {filepath}")
+def load_data(filepath: str) -> pd.DataFrame:
+    """Загружает CSV файл с данными о ПО."""
     df = pd.read_csv(filepath)
-    print(f"Загружено {len(df)} записей.")
-    print(f"Колонки: {list(df.columns)}")
+    print(f"✅ Загружено {len(df)} записей о программном обеспечении")
     return df
 
 
-def find_data_file(base_dir, filename='installed_software.csv'):
-    """Попытаться найти файл данных в нескольких стандартных местах и вернуть путь.
-    Ищем в: <base_dir>/data, <base_dir>/src, <base_dir> (корень проекта), текущая рабочая директория.
-    """
-    candidates = [
-        os.path.join(base_dir, 'data', filename),
-        os.path.join(base_dir, 'src', filename),
-        os.path.join(base_dir, filename),
-        os.path.join(os.getcwd(), filename),
-    ]
-
-    for p in candidates:
-        if os.path.exists(p):
-            print(f"Найден файл данных: {p}")
-            return p
-
-    # Не нашли — поднимем информативную ошибку с перечислением проверенных путей
-    raise FileNotFoundError(
-        "Файл данных не найден. Проверенные пути:\n" + "\n".join(candidates)
-    )
-
-def eda_report(df):
-    """Разведочный анализ данных"""
-    report = []
-    report.append("=== Отчет по установленному ПО ===\n")
-    report.append(f"Всего программ: {len(df)}")
-    report.append(f"Всего уникальных вендоров: {df['Publisher'].nunique()}")
+def clean_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Очищает данные: приводит типы, обрабатывает пропуски."""
+    # Преобразование даты
+    df['install_date'] = pd.to_datetime(df['install_date'])
     
-    # Проверка наличия колонки InstallDate
-    if 'InstallDate' in df.columns:
-        dates = pd.to_datetime(df['InstallDate'], errors='coerce')
-        installed_recent = dates[dates > '2024-01-01'].count()
-        report.append(f"Установлено после 2024-01-01: {installed_recent}")
+    # Приведение типов числовых колонок
+    df['size_mb'] = pd.to_numeric(df['size_mb'], errors='coerce')
     
-    report.append("\nТоп-10 вендоров по количеству ПО:")
-    top_vendors = df['Publisher'].value_counts().head(10)
-    for vendor, count in top_vendors.items():
-        report.append(f"  - {vendor}: {count}")
+    # Удаление дубликатов (если есть)
+    initial_count = len(df)
+    df = df.drop_duplicates(subset=['software_name', 'version'])
+    if len(df) < initial_count:
+        print(f"⚠️ Удалено {initial_count - len(df)} дубликатов")
     
-    report.append("\nТоп-10 программ:")
-    top_programs = df['DisplayName'].value_counts().head(10)
-    for program, count in top_programs.items():
-        report.append(f"  - {program}: {count}")
-    
-    return "\n".join(report)
+    print("✅ Очистка данных завершена")
+    return df
 
-def plot_top_vendors(df, output_path):
-    """График топ вендоров"""
-    plt.figure(figsize=(12, 8))
-    vendor_counts = df['Publisher'].value_counts().head(10)
-    sns.barplot(x=vendor_counts.values, y=vendor_counts.index, hue=vendor_counts.index, palette='viridis', legend=False)
-    plt.title('Топ-10 вендоров по количеству установленного ПО')
-    plt.xlabel('Количество программ')
-    plt.ylabel('Вендор')
+
+def perform_eda(df: pd.DataFrame) -> dict:
+    """Выполняет разведочный анализ данных."""
+    eda_report = {
+        'total_software': len(df),
+        'total_size_gb': round(df['size_mb'].sum() / 1024, 2),
+        'categories': df['category'].value_counts().to_dict(),
+        'top_vendors': df['vendor'].value_counts().head(5).to_dict(),
+        'avg_size_mb': round(df['size_mb'].mean(), 2),
+        'newest_install': df['install_date'].max().strftime('%Y-%m-%d'),
+        'oldest_install': df['install_date'].min().strftime('%Y-%m-%d')
+    }
+    
+    print("\n📊 Основные метрики:")
+    print(f"   Всего программ: {eda_report['total_software']}")
+    print(f"   Общий размер: {eda_report['total_size_gb']} ГБ")
+    print(f"   Средний размер: {eda_report['avg_size_mb']} МБ")
+    print(f"   Категорий: {len(eda_report['categories'])}")
+    
+    return eda_report
+
+
+def create_visualizations(df: pd.DataFrame, output_dir: Path) -> list:
+    """Создает и сохраняет графики анализа."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    saved_files = []
+    
+    # Настройка стиля
+    sns.set_style('whitegrid')
+    plt.rcParams['figure.figsize'] = (12, 6)
+    plt.rcParams['font.size'] = 10
+    
+    # График 1: Распределение по категориям
+    fig, ax = plt.subplots()
+    category_counts = df['category'].value_counts()
+    colors = plt.cm.Set3(range(len(category_counts)))
+    ax.bar(category_counts.index, category_counts.values, color=colors)
+    ax.set_title('Распределение ПО по категориям', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Категория')
+    ax.set_ylabel('Количество')
+    plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
-    plt.savefig(output_path, dpi=300)
+    
+    chart1_path = output_dir / '01_categories_distribution.png'
+    plt.savefig(chart1_path, dpi=150, bbox_inches='tight')
     plt.close()
-    print(f"График сохранен: {output_path}")
-
-def plot_install_timeline(df, output_path):
-    """Временная шкала установки"""
-    if 'InstallDate' not in df.columns:
-        print("Колонка InstallDate не найдена, пропускаем график")
-        return
+    saved_files.append(str(chart1_path))
+    print(f"✅ Сохранен график: {chart1_path.name}")
     
-    plt.figure(figsize=(12, 6))
-    dates = pd.to_datetime(df['InstallDate'], errors='coerce')
-    dates = dates.dropna()
+    # График 2: Топ вендоров
+    fig, ax = plt.subplots()
+    top_vendors = df['vendor'].value_counts().head(8)
+    colors = plt.cm.Blues_r(range(len(top_vendors)))
+    ax.barh(top_vendors.index, top_vendors.values, color=colors)
+    ax.set_title('Топ-8 вендоров по количеству ПО', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Количество программ')
+    ax.invert_yaxis()
+    plt.tight_layout()
     
-    # Группировка по месяцам
-    monthly = dates.dt.to_period('M').value_counts().sort_index()
+    chart2_path = output_dir / '02_top_vendors.png'
+    plt.savefig(chart2_path, dpi=150, bbox_inches='tight')
+    plt.close()
+    saved_files.append(str(chart2_path))
+    print(f"✅ Сохранен график: {chart2_path.name}")
     
-    plt.plot(monthly.index.astype(str), monthly.values, marker='o')
-    plt.title('Количество установленных программ по месяцам')
-    plt.xlabel('Месяц')
-    plt.ylabel('Количество')
+    # График 3: Размер по категориям
+    fig, ax = plt.subplots()
+    size_by_category = df.groupby('category')['size_mb'].sum().sort_values(ascending=False)
+    colors = plt.cm.Oranges(range(len(size_by_category)))
+    ax.bar(size_by_category.index, size_by_category.values / 1024, color=colors)  # в ГБ
+    ax.set_title('Общий размер ПО по категориям (ГБ)', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Категория')
+    ax.set_ylabel('Размер (ГБ)')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    
+    chart3_path = output_dir / '03_size_by_category.png'
+    plt.savefig(chart3_path, dpi=150, bbox_inches='tight')
+    plt.close()
+    saved_files.append(str(chart3_path))
+    print(f"✅ Сохранен график: {chart3_path.name}")
+    
+    # График 4: Установки по времени (линейный график)
+    fig, ax = plt.subplots()
+    installs_by_month = df.set_index('install_date').resample('M')['software_name'].count()
+    ax.plot(installs_by_month.index, installs_by_month.values, marker='o', linewidth=2, markersize=6)
+    ax.set_title('Динамика установки ПО по месяцам', fontsize=14, fontweight='bold')
+    ax.set_xlabel('Месяц')
+    ax.set_ylabel('Количество установок')
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig(output_path, dpi=300)
+    
+    chart4_path = output_dir / '04_install_timeline.png'
+    plt.savefig(chart4_path, dpi=150, bbox_inches='tight')
     plt.close()
-    print(f"График сохранен: {output_path}")
-
-def main():
-    # Пути
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # пытаемся найти CSV в стандартных местах
-    data_path = find_data_file(base_dir, 'installed_software.csv')
-    charts_dir = os.path.join(base_dir, 'output', 'charts')
-    reports_dir = os.path.join(base_dir, 'output', 'reports')
+    saved_files.append(str(chart4_path))
+    print(f"✅ Сохранен график: {chart4_path.name}")
     
-    # Убедимся, что папки существуют
-    os.makedirs(charts_dir, exist_ok=True)
-    os.makedirs(reports_dir, exist_ok=True)
+    return saved_files
 
-    # Загрузка
-    df = load_data(data_path)
+
+def generate_report(eda_results: dict, charts: list, output_dir: Path) -> str:
+    """Генерирует текстовый отчет по анализу."""
+    report_path = output_dir / 'analysis_report.txt'
     
-    # Покажем первые строки
-    print("\nПервые 5 записей:")
-    print(df.head())
-
-    # Генерация отчета
-    report_text = eda_report(df)
-    report_filename = f"software_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
-    report_path = os.path.join(reports_dir, report_filename)
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     with open(report_path, 'w', encoding='utf-8') as f:
-        f.write(report_text)
-    print(f"\nТекстовый отчет сохранен: {report_path}")
+        f.write("=" * 60 + "\n")
+        f.write("ОТЧЕТ ПО АНАЛИЗУ УСТАНОВЛЕННОГО ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ\n")
+        f.write("=" * 60 + "\n")
+        f.write(f"Дата генерации: {timestamp}\n\n")
+        
+        f.write("📊 ОСНОВНЫЕ МЕТРИКИ\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"Всего программ: {eda_results['total_software']}\n")
+        f.write(f"Общий размер: {eda_results['total_size_gb']} ГБ\n")
+        f.write(f"Средний размер программы: {eda_results['avg_size_mb']} МБ\n")
+        f.write(f"Период установок: {eda_results['oldest_install']} — {eda_results['newest_install']}\n\n")
+        
+        f.write("📁 РАСПРЕДЕЛЕНИЕ ПО КАТЕГОРИЯМ\n")
+        f.write("-" * 40 + "\n")
+        for category, count in sorted(eda_results['categories'].items(), key=lambda x: x[1], reverse=True):
+            f.write(f"{category}: {count} шт.\n")
+        f.write("\n")
+        
+        f.write("🏆 ТОП ВЕНДОРОВ\n")
+        f.write("-" * 40 + "\n")
+        for vendor, count in eda_results['top_vendors'].items():
+            f.write(f"{vendor}: {count} шт.\n")
+        f.write("\n")
+        
+        f.write("📈 СОЗДАННЫЕ ВИЗУАЛИЗАЦИИ\n")
+        f.write("-" * 40 + "\n")
+        for chart in charts:
+            f.write(f"- {Path(chart).name}\n")
+        f.write("\n")
+        
+        f.write("=" * 60 + "\n")
+        f.write("Аналитик: Artur Minart | Data Analyst Portfolio\n")
+        f.write("=" * 60 + "\n")
+    
+    print(f"✅ Отчет сохранен: {report_path.name}")
+    return str(report_path)
 
-    # Графики
-    plot_top_vendors(df, os.path.join(charts_dir, 'top_vendors.png'))
-    plot_install_timeline(df, os.path.join(charts_dir, 'install_timeline.png'))
 
+def main():
+    """Основная функция запуска анализа."""
+    print("🚀 Запуск анализа программного обеспечения...\n")
+    
+    # Определение путей
+    base_dir = Path(__file__).parent.parent
+    data_path = base_dir / 'data' / 'installed_software.csv'
+    output_dir = base_dir / 'output' / 'charts'
+    reports_dir = base_dir / 'output' / 'reports'
+    
+    # Проверка существования файла
+    if not data_path.exists():
+        print(f"❌ Файл не найден: {data_path}")
+        return
+    
+    # Загрузка данных
+    df = load_data(str(data_path))
+    
+    # Очистка данных
+    df = clean_data(df)
+    
+    # EDA
+    eda_results = perform_eda(df)
+    
+    # Визуализация
+    print("\n🎨 Создание визуализаций...")
+    charts = create_visualizations(df, output_dir)
+    
+    # Генерация отчета
+    print("\n📝 Генерация отчета...")
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    report_path = generate_report(eda_results, charts, reports_dir)
+    
+    print("\n" + "=" * 50)
+    print("✅ Анализ завершен успешно!")
+    print(f"Графики: {len(charts)} файлов в {output_dir}")
+    print(f"Отчет: {report_path}")
+    print("=" * 50)
 
-    print("\n" + "="*50)
-    print("Анализ завершен успешно!")
-    print("="*50)
-    print(report_text)
 
 if __name__ == "__main__":
     main()
