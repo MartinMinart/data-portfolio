@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # PostgreSQL для хранения данных
+  postgres-analytics:
+    image: postgres:15
+    container_name: data-portfolio-postgres
+    environment:
+      POSTGRES_DB: analytics
+      POSTGRES_USER: analyst
+      POSTGRES_PASSWORD: analyst123
+      POSTGRES_ROOT_PASSWORD: root123
+    ports:
+      - "5435:5432"  # Используем другой порт, чтобы не конфликтовать
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U analyst -d analytics"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - analytics-net
+
+  # Metabase для визуализации
+  metabase:
+    image: metabase/metabase:latest
+    container_name: data-portfolio-metabase
+    ports:
+      - "3033:3000"  # Используем 3033, чтобы не конфликтовать
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_HOST: postgres-analytics
+      MB_DB_PORT: 5432
+      MB_DB_USER: analyst
+      MB_DB_PASS: analyst123
+    depends_on:
+      postgres-analytics:
+        condition: service_healthy
+    volumes:
+      - metabase_data:/metabase.db
+    networks:
+      - analytics-net
+
+  # PgAdmin для управления БД (опционально)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: data-portfolio-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@analytics.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5051:80"
+    depends_on:
+      - postgres-analytics
+    networks:
+      - analytics-net
+
+volumes:
+  postgres_data:
+  metabase_data:
+
+networks:
+  analytics-net:
+    driver: bridge
