@@ -1,33 +1,40 @@
-version: '3.8'
-
 services:
-  # PostgreSQL для хранения данных
   postgres-analytics:
     image: postgres:15
     container_name: data-portfolio-postgres
+    restart: always
     environment:
+<<<<<<< HEAD
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_ROOT_PASSWORD: ${POSTGRES_ROOT_PASSWORD}
     ports:
       - "${POSTGRES_PORT}:5432"  # Используем другой порт, чтобы не конфликтовать
+=======
+      POSTGRES_DB: analytics
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    ports:
+      - "5435:5432"
+>>>>>>> 35753ad (feat: complete portfolio improvements)
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-scripts:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U analyst -d analytics"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d analytics"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
     networks:
       - analytics-net
 
-  # Metabase для визуализации
   metabase:
     image: metabase/metabase:latest
     container_name: data-portfolio-metabase
+    restart: always
     ports:
+<<<<<<< HEAD
       - "${METABASE_PORT}:3000"  # Используем 3033, чтобы не конфликтовать
     environment:
       MB_DB_TYPE: ${MB_DB_TYPE}
@@ -36,18 +43,25 @@ services:
       MB_DB_PORT: ${MB_DB_PORT}
       MB_DB_USER: ${MB_DB_USER}
       MB_DB_PASS: ${MB_DB_PASS}
+=======
+      - "3033:3000"
+    environment:
+      # Metabase без внешней БД - использует встроенную H2
+      MB_DB_TYPE: h2
+      MB_DB_FILE: /metabase.db/metabase.db
+    volumes:
+      - metabase_data:/metabase.db
+>>>>>>> 35753ad (feat: complete portfolio improvements)
     depends_on:
       postgres-analytics:
         condition: service_healthy
-    volumes:
-      - metabase_data:/metabase.db
     networks:
       - analytics-net
 
-  # PgAdmin для управления БД (опционально)
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: data-portfolio-pgadmin
+    restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}

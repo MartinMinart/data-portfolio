@@ -1,40 +1,36 @@
--- Создаём схему для аналитики
+-- Создаём схему
 CREATE SCHEMA IF NOT EXISTS analytics;
 
--- Таблица для транзакций (из твоего fintech проекта)
-CREATE TABLE IF NOT EXISTS analytics.transactions (
-    transaction_id SERIAL PRIMARY KEY,
-    customer_id INTEGER,
-    amount DECIMAL(10,2),
-    transaction_date DATE,
-    transaction_type VARCHAR(50),
-    status VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Создаём таблицу users
+CREATE TABLE IF NOT EXISTS analytics.users (
+    user_id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Таблица для клиентов
-CREATE TABLE IF NOT EXISTS analytics.customers (
-    customer_id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100),
-    registration_date DATE,
-    country VARCHAR(50),
-    risk_score INTEGER DEFAULT 0
+-- Создаём таблицу products
+CREATE TABLE IF NOT EXISTS analytics.products (
+    product_id SERIAL PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    category VARCHAR(50)
 );
 
--- Вставляем пример данных (можно загрузить из твоих CSV)
-INSERT INTO analytics.customers (name, email, registration_date, country) VALUES
-    ('Тестовый Клиент 1', 'test1@example.com', '2024-01-01', 'RU'),
-    ('Тестовый Клиент 2', 'test2@example.com', '2024-02-15', 'RU'),
-    ('Тестовый Клиент 3', 'test3@example.com', '2024-03-20', 'KZ');
+-- Вставляем тестовые данные
+INSERT INTO analytics.users (username, email) VALUES
+    ('john_doe', 'john@example.com'),
+    ('jane_smith', 'jane@example.com'),
+    ('bob_wilson', 'bob@example.com');
 
-INSERT INTO analytics.transactions (customer_id, amount, transaction_date, transaction_type, status) VALUES
-    (1, 1500.00, '2024-06-01', 'payment', 'completed'),
-    (1, 2500.00, '2024-06-05', 'transfer', 'completed'),
-    (2, 500.00, '2024-06-02', 'payment', 'completed'),
-    (3, 10000.00, '2024-06-03', 'payment', 'pending'),
-    (1, 3500.00, '2024-06-07', 'transfer', 'completed');
+INSERT INTO analytics.products (product_name, price, category) VALUES
+    ('Laptop', 999.99, 'Electronics'),
+    ('Mouse', 29.99, 'Accessories'),
+    ('Keyboard', 79.99, 'Accessories'),
+    ('Monitor', 299.99, 'Electronics'),
+    ('Desk', 199.99, 'Furniture');
 
--- Гранты на доступ
-GRANT ALL PRIVILEGES ON SCHEMA analytics TO analyst;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA analytics TO analyst;
+-- Проверяем
+SELECT 'users_count' as metric, COUNT(*) as value FROM analytics.users
+UNION ALL
+SELECT 'products_count' as metric, COUNT(*) as value FROM analytics.products;
