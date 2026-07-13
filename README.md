@@ -1,8 +1,7 @@
 # 📊 Data Portfolio | Artur Minart
 
-> Data Analyst • SQL / Python / BI
->
-> 📧 iamartur1111@gmail.com | 📱 +7 982 216-78-48
+> Data Analyst • SQL / Python / BI  
+> 📧 iamartur1111@gmail.com | 📱 +7 982 216-78-48  
 > 🔗 GitHub: https://github.com/MartinMinart/data-portfolio
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![SQL](https://img.shields.io/badge/SQL-SQLite%20%7C%20PostgreSQL-4479A1) ![Airflow](https://img.shields.io/badge/Apache%20Airflow-ETL-017CEE) ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED) ![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-FFB900)
@@ -15,6 +14,7 @@
 - [Технический стек](#-технический-стек)
 - [Проекты](#-проекты)
 - [Как запустить проекты локально](#-как-запустить-проекты-локально)
+- [Секреты и .env](#-секреты-и-env)
 - [Опыт работы](#-опыт-работы)
 - [Образование и курсы](#-образование-и-курсы)
 - [Контакты](#-контакты)
@@ -140,6 +140,22 @@ cd docker-analytics
 ./stop.sh
 ```
 
+---
+
+## 🔐 Секреты и .env
+
+Чтобы не хранить пароли и секреты в коде и README:
+
+- В корне репозитория добавлены шаблоны `.env.example` и `.env` (файлы содержат только плейсхолдеры).  
+- Файл `.env` должен содержать локальные значения и никогда не коммититься — в `.gitignore` уже добавлена соответствующая запись.
+- docker-analytics и скрипты читают креды из `.env` (через `env_file` в docker-compose или via `source` в bash-скриптах).
+- Рекомендуется:
+  1. Скопировать `.env.example` → `.env` и заполнить реальные значения локально.
+  2. Не коммитить `.env`.
+  3. Заменить в скриптах жёстко закодированные пароли на чтение переменных окружения (если остались).
+
+---
+
 ### 4. Архивные проекты
 
 Для [archive-01-airflow-ecommerce](archive-01-airflow-ecommerce) и [archive-02-sql-ecommerce](archive-02-sql-ecommerce) достаточно открыть соответствующие файлы и воспроизвести примеры локально. Для [archive-03-powerbi-ecommerce](archive-03-powerbi-ecommerce) это скорее концепт и описание, чем готовый дашборд.
@@ -171,4 +187,4 @@ cd docker-analytics
 
 ---
 
-*Последнее обновление: июль 2026*
+*Последнее обновление: 2026-08-11*
