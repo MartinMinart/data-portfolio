@@ -74,3 +74,9 @@ logs/
 # Reports
 report_*.txt
 report_*.json
+
+# Audit reports (только для локального анализа)
+AUDIT_REPORT.md
+IMPLEMENTATION_PLAN.md
+QUICK_START.md
+README_AUDIT.md
