@@ -1,0 +1,64 @@
+services:
+  postgres-analytics:
+    image: postgres:15
+    container_name: data-portfolio-postgres
+    restart: always
+    env_file:
+      - ../.env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT:-5435}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-analyst} -d ${POSTGRES_DB:-analytics}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - analytics-net
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: data-portfolio-metabase
+    restart: always
+    ports:
+      - "${METABASE_PORT:-3033}:3000"
+    environment:
+      MB_DB_TYPE: h2
+      MB_DB_FILE: /app/metabase.db/metabase.db
+    volumes:
+      - metabase_data:/app/metabase.db
+    depends_on:
+      postgres-analytics:
+        condition: service_healthy
+    networks:
+      - analytics-net
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: data-portfolio-pgadmin
+    restart: always
+    env_file:
+      - ../.env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@analytics.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin123}
+    ports:
+      - "${PGADMIN_PORT:-5051}:80"
+    depends_on:
+      - postgres-analytics
+    networks:
+      - analytics-net
+
+volumes:
+  postgres_data:
+  metabase_data:
+
+networks:
+  analytics-net:
+    driver: bridge

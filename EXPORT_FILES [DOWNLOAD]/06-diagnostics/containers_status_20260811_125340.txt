@@ -1,0 +1,4 @@
+NAMES                     STATUS                       PORTS
+data-portfolio-pgadmin    Up About an hour             443/tcp, 0.0.0.0:5051->80/tcp, [::]:5051->80/tcp
+data-portfolio-postgres   Up About an hour (healthy)   0.0.0.0:5435->5432/tcp, [::]:5435->5432/tcp
+data-portfolio-metabase   Up About an hour             0.0.0.0:3033->3000/tcp, [::]:3033->3000/tcp

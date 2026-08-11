@@ -1,0 +1,212 @@
+==========================================================================================
+📊 УНИВЕРСАЛЬНЫЙ АНАЛИЗ ПРОЕКТА
+📍 Путь: /workspaces/data-portfolio
+📅 Дата: 2026-08-11 12:53:41
+==========================================================================================
+
+🏷️  Тип проекта: data-portfolio
+🔀 Git ветка: chore/env-and-audit
+💾 Коммитов: 33 (последний: a9392c1)
+
+📁 СТРУКТУРА ПРОЕКТА:
+
+├── .env (421B)
+├── .env.example (441B)
+├── .gitignore (836B)
+├── AUDIT_REPORT.md (22.0KB)
+├── DOWNLOAD.md (3.8KB)
+├── EXPORT_FILES [DOWNLOAD]/
+│   ├── 01-core/
+│   │   └── README.md (10.7KB)
+│   ├── 02-export-readme/
+│   │   ├── README_airflow-dag.md (3.2KB)
+│   │   ├── README_docker-analytics.md (8.1KB)
+│   │   ├── README_software-eda.md (5.8KB)
+│   │   └── README_sql-fintech.md (9.1KB)
+│   ├── 03-export-docker/
+│   │   └── docker-compose_data-portfolio.yml (1.5KB)
+│   ├── 04-export-cheatsheets/
+│   │   ├── bashrc_reference.md (20.0KB)
+│   │   └── Памятка_data-portfolio.md (8.9KB)
+│   ├── 05-export-scripts/
+│   │   ├── analyze_structure.py (19.0KB)
+│   │   ├── commit-all.sh (441B)
+│   │   ├── diagnose.sh (9.2KB)
+│   │   └── docker-diag (9.2KB)
+│   └── 06-diagnostics/
+│       └── analysis_20260811_125340.txt (0B)
+├── IMPLEMENTATION_PLAN.md (12.3KB)
+├── QUICK_START.md (9.9KB)
+├── README.md (10.7KB)
+├── README_AUDIT.md (12.1KB)
+├── airflow-dag/
+│   ├── README.md (3.2KB)
+│   └── ecommerce_dag.py (8.3KB)
+├── analyze_structure.py (19.0KB)
+├── archive-01-airflow-ecommerce/
+│   ├── README.md (5.3KB)
+│   └── ecommerce_dag.py (8.3KB)
+├── archive-02-sql-ecommerce/
+│   ├── README.md (3.7KB)
+│   └── query.sql (6.6KB)
+├── archive-03-powerbi-ecommerce/
+│   └── README.md (12.8KB)
+├── bashrc_reference.md (20.0KB)
+├── commit-all.sh (441B)
+├── diagnose.sh (9.2KB)
+├── diagnostics/
+│   ├── analysis_20260811_123131.txt (7.9KB)
+│   ├── containers_status_20260811_123207.txt (363B)
+│   └── docker_diag_20260811_123143.txt (9.9KB)
+├── docker-analytics/
+│   ├── .env (449B)
+│   ├── .gitignore (228B)
+│   ├── README.md (8.1KB)
+│   ├── check.sh (3.0KB)
+│   ├── docker-compose.yml (1.5KB)
+│   ├── fix_transactions_import.sh (1.6KB)
+│   ├── import-data.sh (1.1KB)
+│   ├── import_fintech_data.py (3.4KB)
+│   ├── import_fintech_via_sql.sh (2.4KB)
+│   ├── import_sqlite_to_postgres.py (1.0KB)
+│   ├── init-scripts/
+│   │   └── 01-init-database.sql (1.2KB)
+│   ├── start.sh (805B)
+│   ├── stop.sh (131B)
+│   └── test_db_connection.py (939B)
+├── docker-diag (9.2KB)
+├── exports/
+│   ├── cheatsheets/
+│   │   ├── bashrc_reference.md (20.0KB)
+│   │   └── Памятка_data-portfolio.md (8.9KB)
+│   ├── docker-compose/
+│   │   ├── docker-compose_data-portfolio.yml (1.5KB)
+│   │   └── docker-compose_experiments.yml (4.7KB)
+│   ├── projects/
+│   ├── readme/
+│   │   ├── README_airflow-dag.md (3.2KB)
+│   │   ├── README_data-portfolio.md (10.7KB)
+│   │   ├── README_docker-analytics.md (8.1KB)
+│   │   ├── README_software-eda.md (5.8KB)
+│   │   └── README_sql-fintech.md (9.1KB)
+│   └── scripts/
+│       ├── analyze_structure.py (19.0KB)
+│       ├── commit-all.sh (441B)
+│       ├── diagnose.sh (9.2KB)
+│       └── docker-diag (9.2KB)
+├── my reference books/
+│   ├── API спрвочник.ipynb (315.8KB)
+│   ├── A_B test.ipynb (194.7KB)
+│   ├── Cправочник по SQL.ipynb (13.3KB)
+│   ├── Python справочник.ipynb (275.9KB)
+│   ├── Временные ряды.ipynb (272.2KB)
+│   ├── Главный файл.ipynb (116.7KB)
+│   ├── Инструменты для анализа данных и обработки текста.ipynb (88.2KB)
+│   ├── Пример кода работы с файлами.ipynb (23.6MB)
+│   └── Примеры работ с библиотеками.ipynb (5.1MB)
+├── powerbi-dashboard/
+│   └── README.md (10.3KB)
+├── project-01-software-eda/
+│   ├── README.md (5.8KB)
+│   ├── data/
+│   │   └── installed_software.csv (2.2KB)
+│   ├── notebooks/
+│   │   └── software_eda.ipynb (14.1KB)
+│   ├── output/
+│   │   ├── charts/
+│   │   │   ├── .gitkeep (0B)
+│   │   │   ├── install_timeline.png (218.6KB)
+│   │   │   └── top_vendors.png (181.6KB)
+│   │   └── reports/
+│   │       ├── .gitkeep (0B)
+│   │       ├── software_report_20260522_231935.txt (1.0KB)
+│   │       ├── software_report_20260522_232032.txt (1.0KB)
+│   │       └── software_report_20260523_000650.txt (1.0KB)
+│   ├── requirements.txt (77B)
+│   └── src/
+│       ├── analyze_software.py (9.2KB)
+│       ├── installed_software.csv (40.8KB)
+│       └── software_eda.ipynb (3.3KB)
+├── project-02-sql-fintech/
+│   ├── .pytest_cache/
+│   │   ├── .gitignore (37B)
+│   │   ├── CACHEDIR.TAG (191B)
+│   │   ├── README.md (302B)
+│   │   └── v/
+│   │       └── cache/
+│   │           └── nodeids (199B)
+│   ├── README.md (9.1KB)
+│   ├── data/
+│   │   ├── .gitkeep (0B)
+│   │   └── fintech_transactions.db (120KB)
+│   ├── notebooks/
+│   │   └── sql_analysis.ipynb (17.2KB)
+│   ├── requirements.txt (63B)
+│   ├── scripts/
+│   │   └── generate_db.py (2.1KB)
+│   ├── sql/
+│   │   ├── queries/
+│   │   │   ├── .gitkeep (0B)
+│   │   │   ├── 01_advanced_analysis.sql (2.3KB)
+│   │   │   ├── 01_fraud_detection.sql (1006B)
+│   │   │   ├── 02_churn_analysis.sql (1.4KB)
+│   │   │   ├── 02_churn_analysis.sql.bak (4.7KB)
+│   │   │   ├── 03_customer_segmentation.sql (4.9KB)
+│   │   │   └── 04_risk_metrics.sql (5.8KB)
+│   │   ├── schema.sql (1.3KB)
+│   │   └── seed_data.sql (3.2KB)
+│   ├── src/
+│   │   └── init_db.py (11.4KB)
+│   └── tests/
+│       └── test_fraud_detection.py (1.7KB)
+├── requirements-dev.txt (103B)
+├── sql-window-functions/
+│   ├── README.md (3.2KB)
+│   └── query.sql (6.6KB)
+└── Памятка_data-portfolio.md (8.9KB)
+
+==========================================================================================
+📊 СТАТИСТИКА ФАЙЛОВ:
+
+📄 Всего файлов: 861
+💿 Общий размер: 81.0MB
+
+   🐍 Python       407 файлов  (4.3MB)
+   no_extension   300 файлов  (15.7MB)
+   📝 Markdown      35 файлов  (299.3KB)
+   📄 Text          20 файлов  (66.1KB)
+   .typed          14 файлов  (431B)
+   .sample         14 файлов  (25.2KB)
+   🐚 Shell         12 файлов  (37.9KB)
+   📓 Jupyter       12 файлов  (30.0MB)
+   🗄️ SQL          10 файлов  (34.3KB)
+   .exe             6 файлов  (733KB)
+   ⚙️ YAML          5 файлов  (10.3KB)
+   .12              2 файлов  (7.6MB)
+   .BSD             2 файлов  (2.6KB)
+   .APACHE          2 файлов  (19.9KB)
+   💾 CSV            2 файлов  (43.0KB)
+
+==========================================================================================
+📦 ЗАВИСИМОСТИ:
+
+
+==========================================================================================
+💡 РЕКОМЕНДАЦИИ:
+
+📊 Для Data Portfolio проекта:
+   • Добавьте README.md с описанием каждого проекта
+   • Убедитесь, что SQL запросы совместимы с SQLite
+   • Добавьте requirements.txt для воспроизводимости
+📓 Очистите вывод Jupyter notebooks перед коммитом
+
+==========================================================================================
+🚀 БЫСТРЫЕ КОМАНДЫ:
+
+   python analyze_structure.py --save    # Сохранить отчёт
+   python analyze_structure.py --json    # Только JSON вывод
+   python analyze_structure.py --tree    # Только дерево папок
+
+==========================================================================================
+✅ Анализ завершён!
+==========================================================================================

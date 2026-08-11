@@ -1,0 +1,258 @@
+[H[2J[3J[0;32m
+╔══════════════════════════════════════════╗
+║   DIAGNOSTIC REPORT - DATA-PORTFOLIO     ║
+║   Generated: 2026-08-11 12:53:41            ║
+╚══════════════════════════════════════════╝
+[0m
+
+[0;32m--- Рабочая директория ---[0m
+
+/workspaces/data-portfolio
+User: codespace
+
+[0;34m============================================[0m
+[0;34m1. СТРУКТУРА ПРОЕКТА[0m
+[0;34m============================================[0m
+
+Дерево файлов (макс. глубина 3):
+./docker-analytics/init-scripts/01-init-database.sql
+./docker-analytics/check.sh
+./docker-analytics/import_fintech_via_sql.sh
+./docker-analytics/import_fintech_data.py
+./docker-analytics/import_sqlite_to_postgres.py
+./docker-analytics/docker-compose.yml
+./docker-analytics/start.sh
+./docker-analytics/README.md
+./docker-analytics/fix_transactions_import.sh
+./docker-analytics/import-data.sh
+./docker-analytics/test_db_connection.py
+./docker-analytics/stop.sh
+./bashrc_reference.md
+./AUDIT_REPORT.md
+./exports/readme/README_sql-fintech.md
+./exports/readme/README_airflow-dag.md
+./exports/readme/README_software-eda.md
+./exports/readme/README_data-portfolio.md
+./exports/readme/README_docker-analytics.md
+./exports/cheatsheets/bashrc_reference.md
+./exports/cheatsheets/Памятка_data-portfolio.md
+./exports/scripts/commit-all.sh
+./exports/scripts/analyze_structure.py
+./exports/scripts/diagnose.sh
+./exports/scripts/docker-diag
+./exports/docker-compose/docker-compose_data-portfolio.yml
+./exports/docker-compose/docker-compose_experiments.yml
+./project-02-sql-fintech/sql/schema.sql
+./project-02-sql-fintech/sql/seed_data.sql
+./project-02-sql-fintech/notebooks/sql_analysis.ipynb
+
+
+Основные папки:
+EXPORT_FILES [DOWNLOAD]/
+airflow-dag/
+archive-01-airflow-ecommerce/
+archive-02-sql-ecommerce/
+archive-03-powerbi-ecommerce/
+diagnostics/
+docker-analytics/
+exports/
+my reference books/
+powerbi-dashboard/
+
+Ключевые файлы:
+-rw-rw-rw- 1 codespace codespace  421 Aug 11 10:42 .env
+-rw-rw-rw- 1 codespace codespace  441 Aug 11 10:59 .env.example
+-rw-rw-rw- 1 codespace codespace 1.6K Aug 11 11:29 docker-analytics/docker-compose.yml
+
+[0;34m============================================[0m
+[0;34m2. ПРОВЕРКА .ENV[0m
+[0;34m============================================[0m
+
+[0;32m✅ .env существует[0m
+Размер: 421 bytes
+
+Переменные (без паролей):
+POSTGRES_DB=***
+POSTGRES_USER=***
+POSTGRES_PASSWORD=***
+MB_DB_TYPE=***
+MB_DB_DBNAME=***
+MB_DB_USER=***
+MB_DB_PASS=***
+MB_DB_HOST=***
+PGADMIN_DEFAULT_EMAIL=***
+PGADMIN_DEFAULT_PASSWORD=***
+[0;32m✅ .env.example существует[0m
+
+[0;34m============================================[0m
+[0;34m3. DOCKER CONTAINERS STATUS[0m
+[0;34m============================================[0m
+
+Docker version: Docker version 29.3.0-1, build 5927d80c76b3ce5cf782be818922966e8a0d87a3
+
+Запущенные контейнеры:
+NAME                      IMAGE                      COMMAND                  SERVICE              CREATED             STATUS                       PORTS
+data-portfolio-metabase   metabase/metabase:latest   "/app/run_metabase.sh"   metabase             About an hour ago   Up About an hour             0.0.0.0:3033->3000/tcp, [::]:3033->3000/tcp
+data-portfolio-pgadmin    dpage/pgadmin4:latest      "/entrypoint.sh"         pgadmin              About an hour ago   Up About an hour             443/tcp, 0.0.0.0:5051->80/tcp, [::]:5051->80/tcp
+data-portfolio-postgres   postgres:15                "docker-entrypoint.s…"   postgres-analytics   About an hour ago   Up About an hour (healthy)   0.0.0.0:5435->5432/tcp, [::]:5435->5432/tcp
+
+Использование ресурсов:
+NAME                      CPU %     MEM USAGE / LIMIT     NET I/O
+data-portfolio-pgadmin    0.02%     266.8MiB / 7.757GiB   2.85kB / 1.42kB
+data-portfolio-postgres   0.00%     25.11MiB / 7.757GiB   107kB / 64.1kB
+data-portfolio-metabase   0.49%     1.424GiB / 7.757GiB   47.9kB / 78.7kB
+
+[0;34m============================================[0m
+[0;34m4. PORTS & NETWORK[0m
+[0;34m============================================[0m
+
+Проверка портов data-portfolio стека:
+  Port 5435: ❌ CLOSED
+  Port 3033: ❌ CLOSED
+  Port 5051: ❌ CLOSED
+
+Docker сети:
+29b29666c6e8   docker-analytics_analytics-net   bridge    local
+
+[0;34m============================================[0m
+[0;34m5. DOCKER-ANALYTICS STACK[0m
+[0;34m============================================[0m
+
+[0;32m✅ docker-compose.yml существует[0m
+Размер: 1581 bytes
+
+Сервисы в docker-compose:
+postgres-analytics
+metabase
+pgadmin
+analytics-net
+
+[0;34m============================================[0m
+[0;34m6. POSTGRESQL[0m
+[0;34m============================================[0m
+
+[0;32m✅ PostgreSQL контейнер запущен[0m
+
+Проверка пользователя analyst:
+                                                       version                                                        
+----------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 15.18 (Debian 15.18-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+(1 row)
+
+[0;32m✅ Пользователь analyst существует[0m
+
+Таблицы в базе analytics:
+          List of relations
+ Schema |   Name   | Type  |  Owner   
+--------+----------+-------+----------
+ public | products | table | postgres
+ public | users    | table | postgres
+(2 rows)
+
+
+[0;34m============================================[0m
+[0;34m7. METABASE[0m
+[0;34m============================================[0m
+
+[0;32m✅ Metabase контейнер запущен[0m
+
+Проверка health endpoint:
+{"status":"ok"}
+[0;34m============================================[0m
+[0;34m8. PGADMIN[0m
+[0;34m============================================[0m
+
+[0;32m✅ PgAdmin контейнер запущен[0m
+
+Проверка доступности:
+HTTP Status: 302
+
+[0;34m============================================[0m
+[0;34m9. ПРОЕКТЫ ПОРТФОЛИО[0m
+[0;34m============================================[0m
+
+Структура проектов:
+
+[0;32m✅ project-01-software-eda[0m
+  ✅ README.md
+  ✅ src/ (файлов: 1)
+  ✅ requirements.txt
+
+[0;32m✅ project-02-sql-fintech[0m
+  ✅ README.md
+  ✅ src/ (файлов: 1)
+  ✅ requirements.txt
+
+[0;32m✅ airflow-dag[0m
+  ✅ README.md
+
+[0;34m============================================[0m
+[0;34m10. ЛОГИ[0m
+[0;34m============================================[0m
+
+Последние строки логов контейнеров:
+data-portfolio-metabase  | 2026-08-11 12:48:01,160 INFO sync.analyze :: [34mscore-interestingness Analyzed [************************************************··] 😎   97% Table 8 ''PUBLIC.INVOICES''[0m {mb-quartz-job-type=SyncAndAnalyzeDatabase}
+data-portfolio-metabase  | 2026-08-11 12:48:01,167 INFO sync.util :: [35mFINISHED: step ''score-interestingness'' for h2 Database 1 ''Sample Database'' (46.3 ms) (free: 0.58G, total: 0.99G, ratio: 0.59)[0m {mb-quartz-job-type=SyncAndAnalyzeDatabase}
+data-portfolio-metabase  | 2026-08-11 12:48:01,178 INFO sync.util :: [35mFINISHED: Analyze data for h2 Database 1 ''Sample Database'' (171.7 ms) (free: 0.58G, total: 0.99G, ratio: 0.59)[0m {mb-quartz-job-type=SyncAndAnalyzeDatabase}
+data-portfolio-metabase  | 2026-08-11 12:49:00,006 INFO task.refresh-slack-channel-user-cache :: Slack is not configured, not refreshing slack user/channel cache. {mb-quartz-job-type=RefreshCache}
+data-portfolio-metabase  | 2026-08-11 12:53:44,377 DEBUG middleware.log :: [32mGET /api/health 200 4ms (0 DB calls) App DB connections: 0/6 Jetty threads: 3/50 (4 idle, 0 queued) (62 total active threads) Queries in flight: 0 (0 queued) {:metabase-user-id nil}[0m 
+data-portfolio-postgres  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+data-portfolio-postgres  | 
+data-portfolio-postgres  | 2026-08-11 11:30:13.597 UTC [1] LOG:  starting PostgreSQL 15.18 (Debian 15.18-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+data-portfolio-postgres  | 2026-08-11 11:30:13.601 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+data-portfolio-postgres  | 2026-08-11 11:30:13.601 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+data-portfolio-postgres  | 2026-08-11 11:30:13.602 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+data-portfolio-postgres  | 2026-08-11 11:30:13.613 UTC [28] LOG:  database system was shut down at 2026-08-11 11:30:10 UTC
+data-portfolio-postgres  | 2026-08-11 11:30:13.626 UTC [1] LOG:  database system is ready to accept connections
+data-portfolio-postgres  | 2026-08-11 11:35:13.721 UTC [26] LOG:  checkpoint starting: time
+data-portfolio-postgres  | 2026-08-11 11:35:13.789 UTC [26] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.015 s, sync=0.013 s, total=0.077 s; sync files=2, longest=0.008 s, average=0.007 s; distance=0 kB, estimate=0 kB
+
+[0;34m============================================[0m
+[0;34m11. DOCKER VOLUMES[0m
+[0;34m============================================[0m
+
+local     ai-stack_postgres_data
+local     docker-analytics_metabase_data
+local     docker-analytics_postgres_data
+local     metabase_data
+
+[0;34m============================================[0m
+[0;34m12. .GITIGNORE[0m
+[0;34m============================================[0m
+
+[0;32m✅ .gitignore существует[0m
+
+Правила защиты .env:
+.env
+.env.local
+.env.*
+.env
+.env.local
+.env.* 
+.env
+.env.local
+.env.* 
+# But track .env.example as template
+!.env.example
+
+[0;34m============================================[0m
+[0;34m13. ISSUES & RECOMMENDATIONS[0m
+[0;34m============================================[0m
+
+[0;32m✅ Запущено контейнеров: 3[0m
+[0;32m✅ PostgreSQL работает[0m
+[0;32m✅ .env защищен в .gitignore[0m
+
+[0;34m============================================[0m
+[0;34m14. SUMMARY[0m
+[0;34m============================================[0m
+
+Total issues found: 0
+[0;32m🎉 Все системы работают нормально![0m
+
+[0;34m============================================[0m
+[0;34mEND OF DIAGNOSTIC REPORT[0m
+[0;34m============================================[0m
+
+📋 Скопируйте этот вывод и отправьте в чат для получения помощи
+💡 Или выполните: ./diagnose.sh > diagnosis_20260811_125344.txt
