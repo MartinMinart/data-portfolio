@@ -60,3 +60,5 @@ build/
 # Local virtual environments
 .venv/
 venv/
+# But track .env.example as template
+!.env.example
