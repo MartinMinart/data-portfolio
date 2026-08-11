@@ -36,6 +36,7 @@ nano .env
 cd docker-analytics
 ./start.sh
 ```
+cd /workspaces/docker-analytics
 
 Или вручную:
 
