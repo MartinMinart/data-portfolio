@@ -225,11 +225,13 @@ netstat -tulpn | grep 5435
 # Изменить порт в .env
 POSTGRES_PORT=5436
 "Permission denied"
-bash
+```bash
 chmod +x diagnose.sh
 chmod +x docker-analytics/start.sh
 "No such file or directory"
-bash
+```
+
+```bash
 # Проверить, где вы находитесь
 pwd
 # Перейти в нужную директорию
@@ -254,6 +256,22 @@ cd /workspaces/data-portfolio
 | `gl` | Получить изменения |
 | `gco ветка` | Переключить ветку |
 | `gb` | Список веток |
+
+
+# Заархивировать папу для скачивания
+```bash
+cd /workspaces/data-portfolio
+zip -r export_data-portfolio_$(date +%Y%m%d).zip "EXPORT_FILES [DOWNLOAD]"/
+```
+
+# Быстрый цикл коммита
+```bash
+cd /workspaces/data-portfolio
+git status
+git add .
+git commit -m "описание изменений"
+git push
+```
 
 ## 📅 ПОСЛЕДНЕЕ ОБНОВЛЕНИЕ
 Дата: 2026-08-11
