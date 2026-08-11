@@ -132,6 +132,26 @@ alias gl='git pull'
 source ~/.bashrc   # или source ~/.zshrc
 ```
 
+
+## 🔧 **Добавляем алиасы в .bashrc - пример**
+
+```bash
+echo '
+# ============ GIT ALIASES ============
+alias st="git status"
+alias gst="git status"
+alias ga="git add ."
+alias gc="git commit -m"
+alias gp="git push"
+alias gl="git pull"
+alias gco="git checkout"
+alias gb="git branch"
+alias gd="git diff"
+' >> ~/.bashrc
+
+# Применить изменения
+source ~/.bashrc
+
 ## 🎯 ПОСЛЕДОВАТЕЛЬНОСТЬ РАБОТЫ
 1. Начать работу
 ```bash
@@ -154,11 +174,57 @@ docker-compose config  # Проверить YAML синтаксис
 docker-compose down && docker-compose up -d
 ```
 
-3. Закоммитить
+3.cd /workspaces/data-portfolio
+
+# Добавить новые файлы
+git add commit-all.sh Памятка_data-portfolio.md
+
+# Создать коммит
+git commit -m "feat: add commit-all.sh script and update cheat sheet
+
+- Add commit-all.sh for quick commits (like in docker-experiments)
+- Update cheat sheet with Git commands and aliases
+- Add Git aliases to .bashrc (st, ga, gc, gp, gl, etc.)"
+
+# Отправить
+git push Закоммитить
 ```bash
 git add .
 git commit -m "описание изменений"
 git push
+```
+
+## 🧾 ШПАРГАЛКА ПО GIT И КОММИТАМ
+
+### Быстрый цикл работы
+```bash
+cd /workspaces/data-portfolio
+git status
+git add .
+git commit -m "описание изменений"
+git push
+```
+
+### Быстрый вариант для всех изменений
+```bash
+./commit-all.sh "обновил папки и файлы"
+Полезные алиасы (по аналогии с другими проектами)
+bash
+alias st='git status'
+alias gst='git status'
+alias ga='git add .'
+alias gc='git commit -m'
+alias gp='git push'
+alias gl='git pull'
+```
+
+#### Создание Pull Request
+```bash
+# Через GitHub CLI
+gh pr create --title "название PR" --body "описание PR"
+
+# Или вручную через браузер
+# https://github.com/MartinMinart/data-portfolio/pull/new/chore/env-and-audit
 ```
 
 ## ❓ ЧАСТЫЕ ПРОБЛЕМЫ
