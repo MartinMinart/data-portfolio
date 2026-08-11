@@ -174,20 +174,7 @@ docker-compose config  # Проверить YAML синтаксис
 docker-compose down && docker-compose up -d
 ```
 
-3.cd /workspaces/data-portfolio
-
-# Добавить новые файлы
-git add commit-all.sh Памятка_data-portfolio.md
-
-# Создать коммит
-git commit -m "feat: add commit-all.sh script and update cheat sheet
-
-- Add commit-all.sh for quick commits (like in docker-experiments)
-- Update cheat sheet with Git commands and aliases
-- Add Git aliases to .bashrc (st, ga, gc, gp, gl, etc.)"
-
-# Отправить
-git push Закоммитить
+3. Закоммитить
 ```bash
 git add .
 git commit -m "описание изменений"
@@ -255,7 +242,18 @@ cd /workspaces/data-portfolio
 - Docker документация (https://docs.docker.com/)
 - Apache Airflow документация (https://airflow.apache.org/docs/)
 
+## 📊 **Теперь рабочие алиасы**
 
+| Команда | Что делает |
+|---------|------------|
+| `./commit-all.sh "сообщение"` | Добавляет все изменения, создаёт коммит и отправляет |
+| `st` или `git status` | Статус Git |
+| `ga` | Добавить все изменения |
+| `gc "сообщение"` | Создать коммит |
+| `gp` | Отправить в GitHub |
+| `gl` | Получить изменения |
+| `gco ветка` | Переключить ветку |
+| `gb` | Список веток |
 
 ## 📅 ПОСЛЕДНЕЕ ОБНОВЛЕНИЕ
 Дата: 2026-08-11
